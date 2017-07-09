@@ -8,4 +8,6 @@ The wallmount/box (curtainmotoholdercontrollerbox.scad) has to be modified so th
 
 Using esp8266 for wifi gateway and arduino mini pro for controller. Stepper driver drv8825 is more silent then a4988.
 
+Hoping to make at drawing soon, to explain how stuff is put together.
+
 https://www.thingiverse.com/thing:2426076
