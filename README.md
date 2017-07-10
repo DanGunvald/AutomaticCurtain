@@ -13,12 +13,12 @@ Hoping to make at drawing soon, to explain how stuff is put together.
 https://www.thingiverse.com/thing:2426076
 
 Materials:
-Arduino mini pro  
-esp8266 12e (any of the smaller variants if it has to fit in the box)
-ams1117 3.3v
-5v switching regulator
-nema17
-drv8825/a4988 stepper driver
-Capcitator
-Rectifier(Dont know if this is realy needed)
-12v psu
+Arduino mini pro  <br />
+esp8266 12e (any of the smaller variants if it has to fit in the box)<br />
+ams1117 3.3v<br />
+5v switching regulator<br />
+nema17<br />
+drv8825/a4988 stepper driver<br />
+Capcitator<br />
+Rectifier(Dont know if this is realy needed)<br />
+12v psu<br />
