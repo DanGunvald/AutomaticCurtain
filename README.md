@@ -12,7 +12,7 @@ Hoping to make at drawing soon, to explain how stuff is put together.
 
 https://www.thingiverse.com/thing:2426076
 
-Materials:
+Materials:<br />
 Arduino mini pro  <br />
 esp8266 12e (any of the smaller variants if it has to fit in the box)<br />
 ams1117 3.3v<br />
