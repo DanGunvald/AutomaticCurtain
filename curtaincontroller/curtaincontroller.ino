@@ -16,6 +16,7 @@ long pendingwantedservopos = -1;
 long startupdelay = 200;
 int direction = 0;
 volatile bool servoPulse = false;
+volatile bool servoPreHeat = false;
 volatile int ss =  0;
 long ldummy;
 int stepsprsspeed = 10;
@@ -216,19 +217,26 @@ ISR(TIMER1_COMPA_vect){
       if (servoSleep) {
         digitalWrite(SRVENABLE, HIGH);
         servoStarted = millis();
+        servoPreHeat = true;
         servoSleep = false;
-      }  else {
-        changeservoposcountdown --;
-        if (changeservoposcountdown <= 0) {
-          if (curservopos < wantedservopos) {
-            curservopos ++;
-          } else if (curservopos > wantedservopos) {
-            curservopos --;
+      } else {
+        if (servoPreHeat) {
+          if (servoStarted + sets.servopredelay < millis()) {
+            servoPreHeat = false;  
           }
-          tmpS = (curservopos * servostep);
-          servoIntPos = (SERVOTOTAL - SERVOMIN) - (tmpS);
-          servoIntPos1 = SERVOMIN + tmpS;
-          changeservoposcountdown = sets.servomovedelay;
+        } else {
+          changeservoposcountdown --;
+          if (changeservoposcountdown <= 0) {
+            if (curservopos < wantedservopos) {
+              curservopos ++;
+            } else if (curservopos > wantedservopos) {
+              curservopos --;
+            }
+            tmpS = (curservopos * servostep);
+            servoIntPos = (SERVOTOTAL - SERVOMIN) - (tmpS);
+            servoIntPos1 = SERVOMIN + tmpS;
+            changeservoposcountdown = sets.servomovedelay;
+          }
         }
       }
     }
@@ -240,27 +248,6 @@ void setServoPos(long pos) {
   changeservoposcountdown = sets.servomovedelay;
 //  printstatus(2);
 }
-
-/*
-void ActualSetServoPos(long pos) {
-  while (!servoPulse) ;
-  while (servoPulse) ;
-  int s = (pos* servostep);
-  //Serial.println(s);
-  //Serial.println("cli");
-  cli();
-  
-  servoIntPos = (SERVOTOTAL - SERVOMIN) - (s);
-  servoIntPos1 = SERVOMIN + s;
-//  volatile int servoIntPos = 40000 -3000;
-//volatile int servoIntPos1 = 3000;
-//int servopos0 = 2000;
-//int servopos180 = 4000;
-  sei();
-  //Serial.println("sei");
-}
-*/
-
 
 void setupTimerInterruptForStepper() {
   cli();
@@ -393,6 +380,7 @@ void printstatus(int i) {
     Serial.print("wantedpos:");
     Serial.println(wantedpos);
   }
+  
 }
 
 
